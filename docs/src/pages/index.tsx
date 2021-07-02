@@ -264,6 +264,7 @@ const IndexPage = ({ location }) => {
                         isMaxMobileResolution={isMaxMobileResolution}
                         setDarkMode={setDarkMode}
                         isDarkMode={isDarkMode}
+                        isPublicSiteOpen={isPublicSiteOpen}
                     />
                     <div className="introWrapper">
                         <Document
