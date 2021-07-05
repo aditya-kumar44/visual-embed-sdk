@@ -158,7 +158,7 @@ const Search: React.FC<SearchProps> = (props) => {
     return (
         <div
             className={`searchWrapper ${props.leftNavOpen ? 'visHidden' : ''} ${
-                !props.isPublicSiteOpen ? 'top0' : ''
+                !props.isPublicSiteOpen ? 'inClusterSite' : ''
             }`}
         >
             <div className="searchInputWrapper">
