@@ -4,7 +4,7 @@
 :page-pageid: add-action-worksheet
 :page-description: Add custom actions to worksheets
 
-ThoughtSpot supports adding custom actions to visualizations built from worksheets. The custom actions created in the Developer portal appear on a worksheet page, so that you can add these actions to all visualizations generated from that worksheet. This feature allows ThoughtSpot application users to determine and control the position of a custom action on visualizations generated from a specific worksheet. 
+ThoughtSpot supports adding custom actions to the visualizations built from worksheets. The custom actions created in the Developer portal appear on a worksheet page, so that you can add these actions to all the visualizations generated using that worksheet. This feature allows ThoughtSpot application users to determine and control the position of a custom action on visualizations generated from a specific worksheet. 
 
 Any user with edit privileges can assign a custom action to visualizations built from a worksheet. 
 
@@ -38,7 +38,9 @@ Sets the custom action as a primary menu action.
 +
 [NOTE]
 ====
-ThoughtSpot allows only one primary action on a visualization page. If you already have a primary action, you need to select another option, or override your current primary action setting. 
+ThoughtSpot allows only one primary action on a visualization page. If visualizations generated from the worksheet already have a primary action, the new configuration overrides this setting.
+
+If a visualization built from this worksheet already has a primary action added locally at the visualization level, ThoughtSpot will retain this configuration and does not apply the primary action added at the worksheet level.  
 ====
 
 * *Menu*
