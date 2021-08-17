@@ -4,6 +4,7 @@ exports[`Document should render correctly if isPublicSiteOpen is false 1`] = `
 <div>
   <div
     class="documentWrapper"
+    style="width: 100%;"
   >
     <div
       class="documentView"
@@ -19,6 +20,7 @@ exports[`Document should render correctly if isPublicSiteOpen is true 1`] = `
 <div>
   <div
     class="documentWrapper"
+    style="width: 100%;"
   >
     <div
       class="documentView"

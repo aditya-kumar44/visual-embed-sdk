@@ -4,7 +4,7 @@ exports[`Footer should renders correctly 1`] = `
 <div>
   <footer>
     <section
-      class="container"
+      class="containerWrapper"
     >
       <div
         class="footerWrapper"

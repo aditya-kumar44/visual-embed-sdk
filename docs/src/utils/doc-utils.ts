@@ -42,6 +42,7 @@ export const getBreadcrumsPath = (data: any, pageid?: string) => {
     if (!pageid) {
         return [];
     }
+
     return data.reduce((previous, current) => {
         if (current.href === `?pageid=${pageid}`) {
             // To avoid having link for the same page we are setting href to null

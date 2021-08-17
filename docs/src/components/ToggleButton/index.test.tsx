@@ -16,12 +16,12 @@ describe('ToggleButton', () => {
     })
 
     it("should toggle correctly", () => {
-        const { getByTestId } = render(<ToggleButton setDarkMode={setDarkMode} isDarkMode={isDarkMode} />);
+        const { getByTestId, getByText } = render(<ToggleButton setDarkMode={setDarkMode} isDarkMode={isDarkMode} />);
         const toggleBtn = getByTestId('toggle-btn');
         act(() => {
-            // fireEvent.change(toggleBtn, { target: { checked: true } })
             fireEvent.click(toggleBtn)
         })
-        // console.log(toggleBtn);
+        expect(setDarkMode).toHaveBeenCalledTimes(1);
+        expect(setDarkMode).toHaveBeenCalledWith(true);
     })
 })
