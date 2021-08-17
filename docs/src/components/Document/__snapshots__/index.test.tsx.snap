@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Document should render correctly if isPublicSiteOpen is false 1`] = `
+<div>
+  <div
+    class="documentWrapper"
+  >
+    <div
+      class="documentView"
+      id="test title"
+    >
+      test content
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Document should render correctly if isPublicSiteOpen is true 1`] = `
+<div>
+  <div
+    class="documentWrapper"
+  >
+    <div
+      class="documentView"
+      id="test title"
+    >
+      test content
+    </div>
+    <div
+      data-testid="footerDiv"
+    />
+  </div>
+</div>
+`;
