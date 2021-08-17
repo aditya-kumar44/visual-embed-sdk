@@ -25,19 +25,15 @@ import {
     HostEvent,
     EmbedEvent,
     MessageCallback,
-    AuthType,
     Action,
     RuntimeFilter,
-    OperationType,
+    Param,
 } from '../types';
-import { authenticate, isAuthenticated } from '../auth';
-import {
-    initMixpanel,
-    uploadMixpanelEvent,
-    MIXPANEL_EVENT,
-} from '../mixpanel-service';
-import { processData } from '../utils/processData';
+import { authenticate } from '../auth';
+import { uploadMixpanelEvent, MIXPANEL_EVENT } from '../mixpanel-service';
+import { getProcessData } from '../utils/processData';
 import { processTrigger } from '../utils/processTrigger';
+import { version } from '../../package.json';
 
 let config = {} as EmbedConfig;
 
@@ -73,7 +69,6 @@ const handleAuth = () => {
 export const init = (embedConfig: EmbedConfig): void => {
     config = embedConfig;
     handleAuth();
-    initMixpanel(authPromise, embedConfig);
 
     uploadMixpanelEvent(MIXPANEL_EVENT.VISUAL_SDK_CALLED_INIT, {
         authType: config.authType,
@@ -203,6 +198,14 @@ export class TsEmbed {
         this.isError = false;
         this.viewConfig = viewConfig;
         this.shouldEncodeUrlQueryParams = config.shouldEncodeUrlQueryParams;
+        if (!config.suppressNoCookieAccessAlert) {
+            this.on(EmbedEvent.NoCookieAccess, () => {
+                // eslint-disable-next-line no-alert
+                alert(
+                    'Third party cookie access is blocked on this browser, please allow third party cookies for ThoughtSpot to work properly',
+                );
+            });
+        }
     }
 
     /**
@@ -270,7 +273,7 @@ export class TsEmbed {
             if (event.source === this.iFrame.contentWindow) {
                 this.executeCallbacks(
                     eventType,
-                    processData(event.data, this.thoughtSpotHost),
+                    getProcessData(eventType, event.data, this.thoughtSpotHost),
                     eventPort,
                 );
             }
@@ -296,6 +299,21 @@ export class TsEmbed {
             .join('/');
 
         return `${basePath}#/embed`;
+    }
+
+    /**
+     * Common query params set for all the embed modes.
+     * @returns queryParams
+     */
+    protected getBaseQueryParams() {
+        const queryParams = {};
+        queryParams[Param.HostAppUrl] = encodeURIComponent(
+            window?.location?.host || '',
+        );
+        queryParams[Param.ViewPortHeight] = window.innerHeight;
+        queryParams[Param.ViewPortWidth] = window.innerWidth;
+        queryParams[Param.Version] = version;
+        return queryParams;
     }
 
     /**
@@ -360,9 +378,6 @@ export class TsEmbed {
         authPromise
             ?.then(() => {
                 uploadMixpanelEvent(MIXPANEL_EVENT.VISUAL_SDK_RENDER_COMPLETE);
-                this.executeCallbacks(EmbedEvent.AuthInit, {
-                    data: { isLoggedIn: isAuthenticated() },
-                });
 
                 this.iFrame = this.iFrame || document.createElement('iframe');
                 this.iFrame.src = url;
@@ -516,7 +531,6 @@ export class TsEmbed {
         const callbacks = this.eventHandlerMap.get(messageType) || [];
         callbacks.push(callback);
         this.eventHandlerMap.set(messageType, callbacks);
-
         return this;
     }
 
@@ -568,6 +582,12 @@ export class TsEmbed {
         this.isRendered = true;
 
         return this;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    // eslint-disable-next-line camelcase
+    public test_setIframe(iframe: any): void {
+        this.iFrame = iframe;
     }
 }
 

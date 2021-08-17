@@ -4,7 +4,7 @@ import './index.scss';
 
 const Footer = () => (
     <footer>
-        <section className="container">
+        <section className="containerWrapper">
             <div className="footerWrapper">
                 <span data-testid="footer-text">{t('COPYRIGHT_TEXT')}</span>
             </div>
