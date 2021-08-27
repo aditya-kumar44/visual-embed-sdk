@@ -1,25 +1,8 @@
-import React from 'react';
-import { render } from "@testing-library/react";
+import { fetchChild, getBreadcrumsPath, passThroughHandler } from './doc-utils';
 
-import Breadcrums from "./index";
-import { getBreadcrumsPath } from '../../utils/doc-utils';
+describe('test cases for doc-utils', () => {
 
-jest.mock('../../utils/doc-utils', () => ({
-    getBreadcrumsPath: jest.fn().mockReturnValue([
-        {
-            "name": "ThoughtSpot Everywhere",
-            "href": "?pageid=embed-analytics"
-        },
-        {
-            "name": "ThoughtSpot Developer portal",
-            "href": null
-        }
-    ]),
-}))
-
-describe('Breadcrums', () => {
-    const pageId = 'spotdev-portal';
-    const breadcrumsData = [
+    const breadCrumbData = [
         {
             "name": "Home",
             "href": "?pageid=introduction"
@@ -287,12 +270,28 @@ describe('Breadcrums', () => {
                 }
             ]
         }
-    ]
-    it('should render correctly and show breadcrumbs', async () => {
-        const { container, queryByTestId } = await render(<Breadcrums pageid={pageId} breadcrumsData={breadcrumsData} />);
-        expect(container).toMatchSnapshot();
-        expect(queryByTestId('breadcrumbWrapper')).toBeInTheDocument();
-        expect(getBreadcrumsPath).toHaveBeenCalledTimes(1);
+    ];
+
+    const pageId = 'spotdev-portal';
+
+    it('should returns name and href of fetched child', () => {
+        const child = fetchChild('<ul class="navSection"><li><span><a name="test1" href="#">test1</a><span></li></ul><ul class="navSection"><li><span><a name="test2" href="#">test2</a><span></li></ul>');
+        expect(child).toStrictEqual([{ name: 'test1', href: '#' }, { name: 'test2', href: '#' }])
     });
+
+    it('should returns blank array if child is not present', () => {
+        const child = fetchChild('');
+        expect(child).toStrictEqual([])
+    })
+
+    it('should get breadcrumb path', () => {
+        const breadcrumbPath = getBreadcrumsPath(breadCrumbData, pageId);
+        expect(breadcrumbPath).toStrictEqual([{ "href": "?pageid=embed-analytics", "name": "ThoughtSpot Everywhere" }, { "href": null, "name": "ThoughtSpot Developer portal" }]);
+    })
+
+    it('should pass through html correctly', () => {
+        const result = passThroughHandler('<div>{{test}}</div>', { testKey: 'testValue' });
+        expect(result).toStrictEqual('<div>{{test}}</div>')
+    })
 
 })

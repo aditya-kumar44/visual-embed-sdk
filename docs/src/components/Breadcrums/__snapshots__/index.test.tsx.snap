@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Breadcrums should render correctly and show breadcrums 1`] = `
+exports[`Breadcrums should render correctly and show breadcrumbs 1`] = `
 <div>
   <div
     class="breadcrumsWrapper"
-    data-testid="bredcrumbWrapper"
+    data-testid="breadcrumbWrapper"
   >
     <ul
       class="breadcrumb"

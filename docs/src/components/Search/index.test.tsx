@@ -77,7 +77,6 @@ describe('Search', () => {
 
         expect(container).toMatchSnapshot();
         expect(queryAllByTestId('search-result').length).toBe(3);
-        expect(queryByTestId('resultContainer')).toBeInTheDocument();
         expect(resultContainer).toBeInTheDocument();
     })
 
@@ -90,7 +89,6 @@ describe('Search', () => {
             fireEvent.focus(input);
         })
         expect(queryAllByTestId('search-result').length).toBe(3);
-        expect(queryByTestId('resultContainer')).toBeInTheDocument();
         expect(resultContainer).toBeInTheDocument();
     })
 
@@ -103,7 +101,6 @@ describe('Search', () => {
             fireEvent.mouseDown(input);
         })
         expect(queryAllByTestId('search-result').length).toBe(0);
-        expect(queryByTestId('resultContainer')).not.toBeInTheDocument();
         expect(resultContainer).not.toBeInTheDocument();
     })
 

@@ -13,7 +13,7 @@ const Breadcrums: React.FC<BreadcrumsProps> = (props: BreadcrumsProps) => {
     return (
         <>
             {breadcrums.length ? (
-                <div data-testid="bredcrumbWrapper" className="breadcrumsWrapper">
+                <div data-testid="breadcrumbWrapper" className="breadcrumsWrapper">
                     <ul className="breadcrumb">
                         <li>
                             <a href={`?pageid=${HOME_PAGE_ID}`}>

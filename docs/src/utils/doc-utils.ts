@@ -1,7 +1,7 @@
 const buildJSON = (element) => {
     const parentElement = element?.children;
     const subObj: any = {
-        name: parentElement[0]?.innerText?.trim(),
+        name: parentElement[0]?.textContent?.trim(),
         href: parentElement[0]?.querySelector('a')?.getAttribute('href'),
     };
 
@@ -28,6 +28,7 @@ export const fetchChild = (html: string) => {
     return data;
 };
 
+//Not being used anywhere
 const getParentHref = (current) => {
     if (current.href) {
         return current.href;
