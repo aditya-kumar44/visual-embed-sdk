@@ -1,6 +1,6 @@
 {
     "name": "@thoughtspot/visual-embed-sdk",
-    "version": "1.2.0-alpha.18",
+    "version": "1.4.0-alpha.0",
     "description": "ThoughtSpot Embed SDK",
     "module": "lib/src/index.js",
     "main": "dist/tsembed.js",
@@ -35,7 +35,7 @@
         "posttest": "cat ./coverage/sdk/lcov.info | coveralls",
         "prepublishOnly": "npm run test; npm run tsc; npm run bundle-dts; npm run build",
         "publish-dev": "npm publish --tag dev",
-        "publish-prod": "npm publish --tag prod"
+        "publish-prod": "npm publish --tag latest"
     },
     "peerDependencies": {
         "react": "> 16.8.0",
@@ -102,8 +102,7 @@
         "rollup-plugin-typescript2": "0.27.3",
         "ts-jest": "^27.0.4",
         "ts-loader": "8.0.4",
-        "tslint-react": "^5.0.0",
-        "typedoc": "0.20.25",
+        "typedoc": "0.21.6",
         "typedoc-neo-theme": "^1.1.0",
         "typedoc-plugin-toc-group": "0.0.5",
         "typescript": "^4.1.0",

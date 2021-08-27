@@ -16,7 +16,7 @@ The full embedded ThoughtSpot content gives your users the ability to perform ma
 * share objects with other users
 * upload data, and refresh uploaded data
 * relate uploaded data to existing worksheets
-* use search answers
+* use saved answers
 * use SpotIQ
 
 
@@ -57,16 +57,41 @@ import { AppEmbed, Page, AuthType, init } from '@thoughtspot/visual-embed-sdk';
 import { AppEmbed, Page, AuthType, init } from 'https://cdn.jsdelivr.net/npm/@thoughtspot/visual-embed-sdk/dist/tsembed.es.js';
 ----
 
-=== Add the embed domain
+== Add the embed domain
 
-To allow your client application to connect to ThoughtSpot:
+To allow your client application to connect to ThoughtSpot, configure the URL with ThoughtSpot hostname or IP address.
 
-. Configure the URL with ThoughtSpot hostname or IP address.
-. Specify the authentication method to use for authenticating application users.
+[source,javascript]
+----
+init
+    ({
+        thoughtSpotHost:"https://<hostname>:<port>",
+    });
+----
+
+
+thoughtSpotHost::
+_String_. Hostname or IP address of the ThoughtSpot application.
+
+== Configure an authentication method
+
+Define an authentication method. 
+
+In the following example, the authentication method is set to SSO.
+
+[source,javascript]
+----
+init
+    ({
+        authType: AuthType.SSO,
+    });
+----
 
 include::{path}/embed-auth-config.adoc[]
 
-For more information, see xref:embed-authentication.adoc[Embed user authentication].
+== Configure security parameters 
+
+include::{path}/embed-config.adoc[]
 
 === Create an instance of the AppEmbed object
 Create an instance of the AppEmbed object and pass the parameters for the application page view.
@@ -74,12 +99,12 @@ Create an instance of the AppEmbed object and pass the parameters for the applic
 [source,javascript]
 ----
  const appEmbed = new AppEmbed(
- document.getElementById('ts-embed'), 
+ document.getElementById('ts-embed'),
     {
      frameParams: {
          width: '100%',
          height: '100%',
-    
+
      },
      disabledActions: [],
      disabledActionReason: '<reason for disabling>'
@@ -88,12 +113,12 @@ Create an instance of the AppEmbed object and pass the parameters for the applic
      pageId: Page.Data,
      path: '<url-string>',
      runtimeFilters: [],
-     
+
      },
-  
+
   });
 ----
-frameParams:: Sets the `width` and `height` dimensions to render the pages in the web application. You can set the `width` and `height` attribute values in pixels or as a percentage. 
+frameParams:: Sets the `width` and `height` dimensions to render the pages in the web application. You can set the `width` and `height` attribute values in pixels or as a percentage.
 
 disabledActions::
 _Array of strings_. The action menu items to be disabled on the ThoughtSpot application pages.
@@ -114,12 +139,12 @@ disabledActions: Action.Download
 ++++
 
 +
-For a complete list of action menu items and the corresponding strings to use for disabling menu items, see link:{{visualEmbedSDKPrefix}}/enums/action.html[Action, window=_blank].
+For a complete list of action menu items and the corresponding strings to use for disabling menu items, see link:https://visual-embed-sdk.vercel.app/docs/typedoc/enums/action.html[Action, window=_blank].
 
 
 [NOTE]
 ====
-If you have xref:customize-actions-menu.adoc[added a custom action] and you want to disable this custom action, make sure you specify the ID of the custom action in the `disabledActions` attribute. 
+If you have xref:customize-actions-menu.adoc[added a custom action] and you want to disable this custom action, make sure you specify the ID of the custom action in the `disabledActions` attribute.
 
 For example, if the custom action ID is set as *send-email*, use `send-email` in the `disabledActions` attribute to disable this action on a pinboard or answer page.
 ====
@@ -146,7 +171,7 @@ hiddenActions: Action.Download
 <a href="{{previewPrefix}}/playground/fullApp?modifyActions=true" id="preview-in-playground" target="_blank">Try it in Playground</a>
 ++++
 +
-For a complete list of action menu items and the corresponding strings to use for hiding menu items, see link:{{visualEmbedSDKPrefix}}/enums/action.html[Action, window=_blank].
+For a complete list of action menu items and the corresponding strings to use for hiding menu items, see link:https://visual-embed-sdk.vercel.app/docs/typedoc/enums/action.html[Action, window=_blank].
 
 [NOTE]
 ====
@@ -154,8 +179,8 @@ If you have xref:customize-actions-menu.adoc[added a custom action] and you want
 
 For example, if the custom action ID is set as *send-email*, use `send-email` in the `hiddenActions` attribute to hide this action on a pinboard or answer page.
 ====
- 
-showPrimaryNavbar::   
+
+showPrimaryNavbar::
 _Boolean_. Shows or hides the ThoughtSpot navigation bar.
 
 +
@@ -163,7 +188,7 @@ _Boolean_. Shows or hides the ThoughtSpot navigation bar.
 <a href="{{previewPrefix}}/playground/fullApp?showNavBar=true" id="preview-in-playground" target="_blank">Preview in Playground</a>
 ++++
 path::
-_String_. The URL path of the ThoughtSpot application page to embed. 
+_String_. The URL path of the ThoughtSpot application page to embed.
 
 [NOTE]
 When both `path` and `pageId` attributes are defined, the path definition takes precedence.
@@ -172,18 +197,18 @@ pageId::
 The unique identifier for the ThoughtSpot application page. The following values are valid.
 * `*Page.Search*`
 +
-Displays the search answers page when the application loads.
+Displays the page with search bar when the application loads.
 
 * `*Page.Answers*`
 +
-Displays the saved search answers (*Answers*) page when the application loads.
+Displays the saved answers (*Answers*) page when the application loads.
 
 * `*Page.Pinboards*`
 +
 Displays the *Pinboards* page when the application loads.
 
 * `*Page.Data*`
-+ 
++
 Displays the *Data* page when the application loads.
 
 * `*Page.Home*`
@@ -196,7 +221,7 @@ Displays the *Home* page when the application loads.
 ++++
 runtimeFilters [small]_optional_::
 Runtime filters to be applied when the pinboard or visualization page loads.
-Runtime filters provide the ability to pass filter specifications in the URL query parameters and filter data at the time of retrieval.  
+Runtime filters provide the ability to pass filter specifications in the URL query parameters and filter data at the time of retrieval.
 +
 For example, to sort values equal to `100000` in the `Revenue` column for a visualization in a pinboard, you can pass the runtime filter in the URL query parameters as shown here:
 +
@@ -253,7 +278,7 @@ appEmbed.on(EmbedEvent.customAction, payload => {
 	}
 })
 ----
-For a complete list of event types that you can register, see  link:{{visualEmbedSDKPrefix}}/enums/embedevent.html[EmbedEvent, window=_blank].
+For a complete list of event types that you can register, see  link:https://visual-embed-sdk.vercel.app/docs/typedoc/enums/embedevent.html[EmbedEvent, window=_blank].
 
 === Test the embedded workflow
 
@@ -265,10 +290,7 @@ To verify the ThoughtSpot application integration, perform the following tasks:
 * Verify if the page view parameters, such as hiding or showing the data source panel, function as expected.
 * If you have disabled a menu item on a ThoughtSpot application page, verify if the menu command is disabled.
 
-
-== Code sample
-
-See xref:code-samples.adoc[Code samples].
-
 == Additional resources
-For more information on AppEmbed SDK reference, see xref:sdk-reference.adoc[Visual Embed SDK Reference].
+
+* For example code, see xref:code-samples.adoc[Code samples].
+* For more information on `searchEmbed` SDK reference, see xref:sdk-reference.adoc[Visual Embed SDK Reference].

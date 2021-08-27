@@ -17,7 +17,6 @@
 ** link:{{navprefix}}=saml-sso[SAML SSO authentication]
 ** link:{{navprefix}}=trusted-auth[Trusted authentication]
 ** link:{{navprefix}}=custom-domain-config[Custom domain configuration]
-** link:{{navprefix}}=browser-settings[Browser settings for embedding]
 ** link:{{navprefix}}=embed-object-access[Access control and data security]
 
 * link:{{navprefix}}=visual-embed-sdk[Visual Embed SDK]
@@ -74,5 +73,5 @@
 ** link:{{previewPrefix}}/playground/search[Playground, window=_blank]
 ** +++<a href="{{tshost}}/external/swagger" target="_blank">REST API Explorer (Requires login)</a>+++
 ** link:https://developers.thoughtspot.com[ThoughtSpot Developers, window=_blank]
-** link:https://community.thoughtspot.com/customers/s/[Community, window=_blank] 
+** link:https://community.thoughtspot.com/customers/s/[Community, window=_blank]
 ** link:https://cloud-docs.thoughtspot.com[Product Documentation, window=_blank]
