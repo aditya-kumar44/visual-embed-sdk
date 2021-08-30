@@ -8,7 +8,6 @@ import {
   AuthType,
   EmbedEvent,
 } from "@thoughtspot/visual-embed-sdk";
-import { useSurveySender } from "../send-survey-modal/SendSurveyModal";
 
 import { getDataForColumnName } from "./Pinboard.util";
 import "./Pinboard.css";
@@ -18,7 +17,7 @@ const customHost: string = queryParams.host as string;
 
 const thoughtSpotHost = !!customHost
   ? `https://${customHost}`
-  : "https://10.87.90.95";
+  : "https://internal-tscloudwaftest2-1170995390.us-west-2.elb.amazonaws.com/";
 
 init({
   thoughtSpotHost,
@@ -34,7 +33,6 @@ init({
 export const Pinboard = () => {
   const embedRef = React.useRef(null);
   const [isEmbedLoading, setIsEmbedLoading] = React.useState(true);
-  const { sendSurvey, modalJSX } = useSurveySender();
 
   React.useEffect(() => {
     if (embedRef !== null) {
@@ -52,23 +50,22 @@ export const Pinboard = () => {
       pinboardId: "d084c256-e284-4fc4-b80c-111cb606449a",
       /*param-end-pinboardId*/
       /*param-start-runtimeFilters*//*param-end-runtimeFilters*/
-  });
+    });
 
-     tsPinboard
-       .on(EmbedEvent.Init, () => setIsEmbedLoading(true))
-       .on(EmbedEvent.Load, () => setIsEmbedLoading(false))
-       .on(EmbedEvent.CustomAction, (payload: any) => {
-         const data = payload.data;
-         if (data.id === "send-survey") {
-           const recipients = getDataForColumnName(
-             data.columnsAndData,
-             "email address"
-           );
-           sendSurvey(recipients);
-         }
-       })
-       .render();
-   }, []);
+    tsPinboard
+      .on(EmbedEvent.Init, () => setIsEmbedLoading(true))
+      .on(EmbedEvent.Load, () => setIsEmbedLoading(false))
+      .on(EmbedEvent.CustomAction, (payload: any) => {
+        const data = payload.data;
+        if (data.id === "send-survey") {
+          const recipients = getDataForColumnName(
+            data.columnsAndData,
+            "email address"
+          );
+        }
+      })
+      .render();
+  }, []);
   return (
     <div className="pinboard">
       {isEmbedLoading ? (
@@ -76,10 +73,9 @@ export const Pinboard = () => {
           <Spin size="large" />
         </div>
       ) : (
-        ""
-      )}
+          ""
+        )}
       <div className="tsEmbed" ref={embedRef} id="tsEmbed"></div>
-      {modalJSX}
     </div>
   );
 };

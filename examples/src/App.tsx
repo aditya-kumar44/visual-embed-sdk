@@ -4,7 +4,7 @@ import { Layout, Menu } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import "antd/dist/antd.css";
 import './App.css';
-import { FeedbackAnalysis } from './components/feedback-analysis/FeedbackAnalysis';
+import { Search } from './components/search/Search';
 import { Pinboard } from './components/pinboard/Pinboard';
 import { Visualisation } from './components/visualisation/Visualisation';
 import { FullApp } from './components/fullApp/FullApp';
@@ -13,6 +13,7 @@ const { Sider, Content } = Layout;
 
 const PathToKey = {
   '/': 'search',
+  '/search': 'search',
   '/visualisation': 'visualisation',
   '/pinboard': 'pinboard',
   '/fullapp': 'fullapp',
@@ -62,8 +63,8 @@ const AppView = () => {
         </Sider>
         <Content>
           <Routes>
-            <Route path="/" element={<FeedbackAnalysis />}></Route>
-            <Route path="/search" element={<FeedbackAnalysis />}></Route>
+            <Route path="/" element={<Search />}></Route>
+            <Route path="/search" element={<Search />}></Route>
             <Route path="/pinboard" element={<Pinboard />}></Route>
             <Route path="/visualisation" element={<Visualisation />}></Route>
             <Route path="/fullapp" element={<FullApp />}></Route>

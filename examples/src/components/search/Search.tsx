@@ -7,17 +7,16 @@ import {
   AuthType,
   EmbedEvent,
 } from "@thoughtspot/visual-embed-sdk";
-import { useSurveySender } from "../send-survey-modal/SendSurveyModal";
 
-import { getDataForColumnName } from "./FeedbackAnalysis.util";
-import "./FeedbackAnalysis.css";
+import { getDataForColumnName } from "./Search.util";
+import "./Search.css";
 
 const queryParams = qs.parse(window.location.search);
 const customHost: string = queryParams.host as string;
 
 const thoughtSpotHost = !!customHost
   ? `https://${customHost}`
-  : "https://10.87.90.95";
+  : "https://internal-tscloudwaftest2-1170995390.us-west-2.elb.amazonaws.com/";
 
 init({
   thoughtSpotHost,
@@ -30,10 +29,9 @@ init({
   username: "tsadmin",
 });
 
-export const FeedbackAnalysis = () => {
+export const Search = () => {
   const embedRef = React.useRef(null);
   const [isEmbedLoading, setIsEmbedLoading] = React.useState(true);
-  const { sendSurvey, modalJSX } = useSurveySender();
 
   React.useEffect(() => {
     if (embedRef !== null) {
@@ -53,7 +51,6 @@ export const FeedbackAnalysis = () => {
             data.columnsAndData,
             "email address"
           );
-          sendSurvey(recipients);
         }
       })
       .render();
@@ -65,10 +62,9 @@ export const FeedbackAnalysis = () => {
           <Spin size="large" />
         </div>
       ) : (
-        ""
-      )}
+          ""
+        )}
       <div className="tsEmbed" ref={embedRef} id="tsEmbed"></div>
-      {modalJSX}
     </div>
   );
 };

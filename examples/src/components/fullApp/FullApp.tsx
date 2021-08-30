@@ -8,7 +8,6 @@ import {
   AppEmbed,
   Page,
 } from "@thoughtspot/visual-embed-sdk";
-import { useSurveySender } from "../send-survey-modal/SendSurveyModal";
 
 import { getDataForColumnName } from "./FullApp.util";
 import "./FullApp.css";
@@ -18,7 +17,7 @@ const customHost: string = queryParams.host as string;
 
 const thoughtSpotHost = !!customHost
   ? `https://${customHost}`
-  : "https://10.87.90.95";
+  : "https://internal-tscloudwaftest2-1170995390.us-west-2.elb.amazonaws.com/";
 
 init({
   thoughtSpotHost,
@@ -34,7 +33,6 @@ init({
 export const FullApp = () => {
   const embedRef = React.useRef(null);
   const [isEmbedLoading, setIsEmbedLoading] = React.useState(true);
-  const { sendSurvey, modalJSX } = useSurveySender();
 
   React.useEffect(() => {
     if (embedRef !== null) {
@@ -47,11 +45,11 @@ export const FullApp = () => {
       /*param-start-disableProfileAndHelp*//*param-end-disableProfileAndHelp*/
       /*param-start-navigateToUrl*//*param-end-navigateToUrl*/
       /*param-start-pageId*/
-       pageId: Page.Home,
+      pageId: Page.Home,
       /*param-end-pageId*/
       /*param-start-modifyActions*//*param-end-modifyActions*/
       /*param-start-runtimeFilters*//*param-end-runtimeFilters*/
-  });
+    });
 
     tsFullApp
       .on(EmbedEvent.Init, () => setIsEmbedLoading(true))
@@ -65,10 +63,9 @@ export const FullApp = () => {
           <Spin size="large" />
         </div>
       ) : (
-        ""
-      )}
+          ""
+        )}
       <div className="tsEmbed" ref={embedRef} id="tsEmbed"></div>
-      {modalJSX}
     </div>
   );
 };

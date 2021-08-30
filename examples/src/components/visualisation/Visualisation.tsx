@@ -8,7 +8,6 @@ import {
   AuthType,
   EmbedEvent,
 } from "@thoughtspot/visual-embed-sdk";
-import { useSurveySender } from "../send-survey-modal/SendSurveyModal";
 
 import { getDataForColumnName } from "./Visualisation.util";
 import "./Visualisation.css";
@@ -18,7 +17,7 @@ const customHost: string = queryParams.host as string;
 
 const thoughtSpotHost = !!customHost
   ? `https://${customHost}`
-  : "https://10.87.90.95";
+  : "https://internal-tscloudwaftest2-1170995390.us-west-2.elb.amazonaws.com/";
 
 init({
   thoughtSpotHost,
@@ -34,7 +33,6 @@ init({
 export const Visualisation = () => {
   const embedRef = React.useRef(null);
   const [isEmbedLoading, setIsEmbedLoading] = React.useState(true);
-  const { sendSurvey, modalJSX } = useSurveySender();
 
   React.useEffect(() => {
     if (embedRef !== null) {
@@ -48,23 +46,22 @@ export const Visualisation = () => {
     const tsVisualisation = new PinboardEmbed("#tsEmbed", {
       frameParams: {},
       pinboardId: "74852035-9624-4fac-b352-200fa8506b14",
-  });
+    });
 
-     tsVisualisation
-       .on(EmbedEvent.Init, () => setIsEmbedLoading(true))
-       .on(EmbedEvent.Load, () => setIsEmbedLoading(false))
-       .on(EmbedEvent.CustomAction, (payload: any) => {
-         const data = payload.data;
-         if (data.id === "send-survey") {
-           const recipients = getDataForColumnName(
-             data.columnsAndData,
-             "email address"
-           );
-           sendSurvey(recipients);
-         }
-       })
-       .render();
-   }, []);
+    tsVisualisation
+      .on(EmbedEvent.Init, () => setIsEmbedLoading(true))
+      .on(EmbedEvent.Load, () => setIsEmbedLoading(false))
+      .on(EmbedEvent.CustomAction, (payload: any) => {
+        const data = payload.data;
+        if (data.id === "send-survey") {
+          const recipients = getDataForColumnName(
+            data.columnsAndData,
+            "email address"
+          );
+        }
+      })
+      .render();
+  }, []);
   return (
     <div className="visualisation">
       {isEmbedLoading ? (
@@ -72,10 +69,9 @@ export const Visualisation = () => {
           <Spin size="large" />
         </div>
       ) : (
-        ""
-      )}
+          ""
+        )}
       <div className="tsEmbed" ref={embedRef} id="tsEmbed"></div>
-      {modalJSX}
     </div>
   );
 };
