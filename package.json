@@ -30,8 +30,8 @@
         "docs-cmd": "node scripts/gatsby-commands.js",
         "docgen": "typedoc --tsconfig tsconfig.json --theme typedoc-theme",
         "test-sdk": "jest -c jest.config.sdk.js",
-        "test": "npm run test-sdk",
-        "test-docs": "jest /docs",
+        "test-docs": "jest -c jest.config.docs.js",
+        "test": "npm run test-sdk && npm run test-docs && npx istanbul-merge --out ./coverage/coverage.json ./coverage/docs/coverage-final.json ./coverage/sdk/coverage-final.json && npx istanbul report --include ./coverage/coverage.json --dir ./coverage html",
         "posttest": "cat ./coverage/sdk/lcov.info | coveralls",
         "prepublishOnly": "npm run test; npm run tsc; npm run bundle-dts; npm run build",
         "publish-dev": "npm publish --tag dev",
@@ -49,8 +49,8 @@
         "@mdx-js/react": "^1.6.22",
         "@react-icons/all-files": "^4.1.0",
         "@rollup/plugin-commonjs": "^18.0.0",
-        "@rollup/plugin-node-resolve": "^11.2.1",
         "@rollup/plugin-json": "^4.1.0",
+        "@rollup/plugin-node-resolve": "^11.2.1",
         "@testing-library/dom": "^7.31.0",
         "@testing-library/jest-dom": "^5.14.1",
         "@testing-library/react": "^11.2.7",
@@ -87,6 +87,7 @@
         "highlight.js": "^10.6.0",
         "html-to-text": "^7.0.0",
         "identity-obj-proxy": "^3.0.0",
+        "istanbul-merge": "^1.1.1",
         "jest": "^26.6.3",
         "jest-puppeteer": "^4.4.0",
         "node-sass": "^4.0.0",
@@ -100,7 +101,7 @@
         "react-use-flexsearch": "^0.1.1",
         "rollup": "2.30.0",
         "rollup-plugin-typescript2": "0.27.3",
-        "ts-jest": "^27.0.4",
+        "ts-jest": "^26.5.5",
         "ts-loader": "8.0.4",
         "typedoc": "0.21.6",
         "typedoc-neo-theme": "^1.1.0",
@@ -128,5 +129,8 @@
     "bugs": {
         "url": "https://github.com/thoughtspot/visual-embed-sdk/issues"
     },
-    "homepage": "https://github.com/thoughtspot/visual-embed-sdk#readme"
+    "homepage": "https://github.com/thoughtspot/visual-embed-sdk#readme",
+    "globals": {
+        "window": {}
+    }
 }
