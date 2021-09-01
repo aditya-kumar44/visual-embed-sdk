@@ -1,11 +1,11 @@
 module.exports = {
   transform: {
-    "^.+\\.[jt]sx?$": "<rootDir>/jest-preprocess.js",
+    "^.+\\.[jt]sx?$": "<rootDir>/docs/jest-preprocess.js",
     "\\.tsx?$": "ts-jest",
   },
   moduleNameMapper: {
     ".+\\.(css|styl|less|sass|scss)$": `identity-obj-proxy`,
-    ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": `<rootDir>/__mocks__/file-mock.js`,
+    ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": `<rootDir>/docs/__mocks__/file-mock.js`,
   },
   testPathIgnorePatterns: [`node_modules`, `\\.cache`, `<rootDir>.*/public`, '<rootDir>/src'],
   transformIgnorePatterns: [`node_modules/(?!(gatsby)/)`],
@@ -16,9 +16,9 @@ module.exports = {
     },
   },
   testURL: `http://localhost`,
-  setupFiles: [`<rootDir>/loadershim.js`],
+  setupFiles: [`<rootDir>/docs/loadershim.js`],
   testEnvironment: `jsdom`,
-  setupFilesAfterEnv: ["<rootDir>/setup-test-env.js"],
+  setupFilesAfterEnv: ["<rootDir>/docs/setup-test-env.js"],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json', 'node'],
   collectCoverage: true,
   clearMocks: true,
