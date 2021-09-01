@@ -98,10 +98,28 @@ export interface EmbedConfig {
      * @default false
      */
     shouldEncodeUrlQueryParams?: boolean;
+
+    /**
+     * Suppress cookie access alert when third party cookies are blocked by the user's browser.
+     * Third party cookie blocking is the default behaviour on Safari and opt-in for Firefox/Chrome.
+     * If you set this to `true`, you are encouraged to handle `noCookieAccess` event, to show your own treatment
+     * in this case.
+     * @default false
+     */
+    suppressNoCookieAccessAlert?: boolean;
+
+    /**
+     * Re-login when session expires with the previous login options
+     * @default true
+     */
+    autoLogin?: boolean;
 }
 
 export type MessagePayload = { type: string; data: any };
-export type MessageCallback = (payload: MessagePayload) => void;
+export type MessageCallback = (
+    payload: MessagePayload,
+    responder?: (data: any) => void,
+) => void;
 
 export type GenericCallbackFn = (...args: any[]) => any;
 
@@ -267,6 +285,16 @@ export enum EmbedEvent {
      */
     EmbedHeight = 'EMBED_HEIGHT',
     /**
+     * The center of visible iframe viewport is calculated.
+     * @return data - The center of the visible Iframe viewport.
+     */
+    EmbedIframeCenter = 'EmbedIframeCenter',
+    /**
+     * Detects the route change.
+     * @hidden
+     */
+    RouteChange = 'ROUTE_CHANGE',
+    /**
      * The v1 event type for Data
      * @hidden
      */
@@ -341,8 +369,11 @@ export enum Param {
     DisableActions = 'disableAction',
     DisableActionReason = 'disableHint',
     ForceTable = 'forceTable',
+    preventPinboardFilterRemoval = 'preventPinboardFilterRemoval',
     SearchQuery = 'searchQuery',
     HideActions = 'hideAction',
+    HideObjects = 'hideObjects',
+    HostAppUrl = 'hostAppUrl',
     EnableVizTransformations = 'enableVizTransform',
     EnableSearchAssist = 'enableSearchAssist',
     HideResult = 'hideResult',
@@ -351,6 +382,7 @@ export enum Param {
     searchTokenString = 'searchTokenString',
     executeSearch = 'executeSearch',
     fullHeight = 'isFullHeightPinboard',
+    Version = 'sdkVersion',
     ViewPortHeight = 'viewPortHeight',
     ViewPortWidth = 'viewPortWidth',
 }
@@ -403,6 +435,9 @@ export enum Action {
     CustomizeHeadlines = 'customizeHeadlines',
     PinboardInfo = 'pinboardInfo',
     SendAnswerFeedback = 'sendFeedback',
+    /**
+     * @deprecated Will be removed in next version
+     */
     CustomAction = 'customAction',
     DownloadEmbraceQueries = 'downloadEmbraceQueries',
     Pin = 'pin',
@@ -410,13 +445,14 @@ export enum Action {
     Subscription = 'subscription',
     Explore = 'explore',
     DrillInclude = 'context-menu-item-include',
-    DrillExlude = 'context-menu-item-exclude',
+    DrillExclude = 'context-menu-item-exclude',
     CopyToClipboard = 'context-menu-item-copy-to-clipboard',
     DrillEdit = 'context-menu-item-edit',
     EditMeasure = 'context-menu-item-edit-measure',
     Separator = 'context-menu-item-separator',
     DrillDown = 'DRILL',
     RequestAccess = 'requestAccess',
+    QueryDetailsButtons = 'queryDetailsButtons',
 }
 
 export interface SessionInterface {
