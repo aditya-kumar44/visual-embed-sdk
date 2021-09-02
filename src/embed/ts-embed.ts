@@ -512,6 +512,25 @@ export class TsEmbed {
     }
 
     /**
+     * Navigate to particular page. eg:answers/pinboards/home
+     * This is used for embedding answers, pinboards, visualizations and full application.
+     * @param path The string, set to iframe src and navigate to new page
+     * eg: appEmbed.navigateToPage('pinboards')
+     */
+    public navigateToPage(path: string): void {
+        const iframeSrc = this.iFrame?.src;
+        if (iframeSrc) {
+            const embedPath = '#/embed';
+            const currentPath = iframeSrc.includes(embedPath) ? embedPath : '#';
+            this.iFrame.src = `${
+                iframeSrc.split(currentPath)[0]
+            }${currentPath}/${path.replace(/^\/?#?\//, '')}`;
+        } else {
+            console.log('Please call render before invoking this method');
+        }
+    }
+
+    /**
      * Triggers an event on specific Port registered against
      * for the EmbedEvent
      * @param eventType The message type
