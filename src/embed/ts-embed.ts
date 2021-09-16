@@ -45,7 +45,7 @@ const V1EventMap = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface LayoutConfig { }
+export interface LayoutConfig {}
 
 /**
  * Embedded iFrame configuration
@@ -309,8 +309,9 @@ export class TsEmbed {
         const queryStringFrag = queryString ? `&${queryString}` : '';
         const primaryNavParam = `&primaryNavHidden=${!showPrimaryNavbar}`;
         const disableProfileAndHelpParam = `&profileAndHelpInNavBarHidden=${disableProfileAndHelp}`;
-        let queryParams = `?embedApp=true${isAppEmbed ? primaryNavParam : ''}${isAppEmbed ? disableProfileAndHelpParam : ''
-            }${queryStringFrag}`;
+        let queryParams = `?embedApp=true${isAppEmbed ? primaryNavParam : ''}${
+            isAppEmbed ? disableProfileAndHelpParam : ''
+        }${queryStringFrag}`;
         if (this.shouldEncodeUrlQueryParams) {
             queryParams = `?base64UrlEncodedFlags=${getEncodedQueryParamsString(
                 queryParams.substr(1),
@@ -527,8 +528,9 @@ export class TsEmbed {
         if (iframeSrc) {
             const embedPath = '#/embed';
             const currentPath = iframeSrc.includes(embedPath) ? embedPath : '#';
-            this.iFrame.src = `${iframeSrc.split(currentPath)[0]
-                }${currentPath}/${path.replace(/^\/?#?\//, '')}`;
+            this.iFrame.src = `${
+                iframeSrc.split(currentPath)[0]
+            }${currentPath}/${path.replace(/^\/?#?\//, '')}`;
         } else {
             console.log('Please call render before invoking this method');
         }
