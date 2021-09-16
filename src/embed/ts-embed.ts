@@ -45,7 +45,7 @@ const V1EventMap = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface LayoutConfig {}
+export interface LayoutConfig { }
 
 /**
  * Embedded iFrame configuration
@@ -70,7 +70,7 @@ export interface ViewConfig {
      */
     layoutConfig?: LayoutConfig;
     /**
-     * The height and width of the iFrame.
+     * The <b>width</b> and <b>height</b> dimensions to render an embedded object inside your app.  Specify the values in pixels or percentage.
      */
     frameParams?: FrameParams;
     /**
@@ -309,9 +309,8 @@ export class TsEmbed {
         const queryStringFrag = queryString ? `&${queryString}` : '';
         const primaryNavParam = `&primaryNavHidden=${!showPrimaryNavbar}`;
         const disableProfileAndHelpParam = `&profileAndHelpInNavBarHidden=${disableProfileAndHelp}`;
-        let queryParams = `?embedApp=true${isAppEmbed ? primaryNavParam : ''}${
-            isAppEmbed ? disableProfileAndHelpParam : ''
-        }${queryStringFrag}`;
+        let queryParams = `?embedApp=true${isAppEmbed ? primaryNavParam : ''}${isAppEmbed ? disableProfileAndHelpParam : ''
+            }${queryStringFrag}`;
         if (this.shouldEncodeUrlQueryParams) {
             queryParams = `?base64UrlEncodedFlags=${getEncodedQueryParamsString(
                 queryParams.substr(1),
@@ -519,19 +518,16 @@ export class TsEmbed {
     }
 
     /**
-     * Navigate to particular page. eg:answers/pinboards/home
-     * This is used for embedding answers, pinboards, visualizations and full application.
-     * @param path The string, set to iframe src and navigate to new page
-     * eg: appEmbed.navigateToPage('pinboards')
+     * Navigates users to the specified application page. Use this method to navigate users from the embedded ThoughtSpot context to a specific page in your app.
+     * @param path The page path string. For example, to navigate users to a pinboard page, define the method as navigateToPage('pinboard/&lt;pinboardId&gt;').
      */
     public navigateToPage(path: string): void {
         const iframeSrc = this.iFrame?.src;
         if (iframeSrc) {
             const embedPath = '#/embed';
             const currentPath = iframeSrc.includes(embedPath) ? embedPath : '#';
-            this.iFrame.src = `${
-                iframeSrc.split(currentPath)[0]
-            }${currentPath}/${path.replace(/^\/?#?\//, '')}`;
+            this.iFrame.src = `${iframeSrc.split(currentPath)[0]
+                }${currentPath}/${path.replace(/^\/?#?\//, '')}`;
         } else {
             console.log('Please call render before invoking this method');
         }
@@ -587,6 +583,10 @@ export class TsEmbed {
         return this;
     }
 
+    /**
+     * @method
+     * @ignore
+     */
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     // eslint-disable-next-line camelcase
     public test_setIframe(iframe: any): void {
